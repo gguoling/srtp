@@ -20,7 +20,7 @@
 #
 ############################################################################
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 project(SRTP C)
 
 
@@ -84,14 +84,9 @@ if(ENABLE_GDOI)
 endif()
 
 
-include(CheckCSourceCompiles)
 include(CheckIncludeFile)
-include(CheckLibraryExists)
 include(CheckFunctionExists)
 include(CheckTypeSize)
-if("${CMAKE_VERSION}" VERSION_GREATER "2.8.5")
-	include(CMakePushCheckState)
-endif()
 if(MSVC)
 	list(APPEND CMAKE_REQUIRED_INCLUDES ${CMAKE_PREFIX_PATH}/include/MSVC)
 endif()
@@ -100,7 +95,6 @@ check_include_file(stdlib.h HAVE_STDLIB_H)
 check_include_file(unistd.h HAVE_UNISTD_H)
 check_include_file(byteswap.h HAVE_BYTESWAP_H)
 check_include_file(stdint.h HAVE_STDINT_H)
-check_include_file(sys/uio.h HAVE_SYS_UIO_H)
 check_include_file(inttypes.h HAVE_INTTYPES_H)
 check_include_file(sys/types.h HAVE_SYS_TYPES_H)
 check_include_file(machine/types.h HAVE_MACHINE_TYPES_H)
@@ -116,38 +110,12 @@ if(HAVE_WINDOWS_H)
 	endif()
 endif()
 check_include_file(syslog.h HAVE_SYSLOG_H)
-check_include_file(memory.h HAVE_MEMORY_H)
-check_include_file(strings.h HAVE_STRINGS_H)
-check_include_file(string.h HAVE_STRING_H)
-check_include_file(sys/stat.h HAVE_SYS_STAT_H)
 
-check_function_exists("socket" HAVE_SOCKET)
 check_function_exists("inet_aton" HAVE_INET_ATON)
 check_function_exists("usleep" HAVE_USLEEP)
 check_function_exists("sigaction" HAVE_SIGACTION)
 
-if(NOT HAVE_SOCKET)
-	check_library_exists("socket" "socket" "" HAVE_LIBSOCKET)
-	if("${CMAKE_VERSION}" VERSION_GREATER "2.8.5")
-		cmake_push_check_state(RESET)
-	else()
-		set(SAVE_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES})
-	endif()
-	list(APPEND CMAKE_REQUIRED_LIBRARIES wsock32 ws2_32)
-	check_c_source_compiles("#include <winsock2.h>
-int main(int argc, char *argv[]) {
-socket(0, 0, 0);
-return 0;
-}"
-	HAVE_LIBWSOCK32)
-	if("${CMAKE_VERSION}" VERSION_GREATER "2.8.5")
-		cmake_pop_check_state()
-	else()
-		set(CMAKE_REQUIRED_LIBRARIES ${SAVE_CMAKE_REQUIRED_LIBRARIES})
-	endif()
-endif()
-
-set(TYPES_CHECKED int8_t uint8_t int16_t uint16_t int32_t uint32_t uint64_t)
+set(TYPES_CHECKED uint8_t uint16_t uint32_t uint64_t)
 set(CMAKE_EXTRA_INCLUDE_FILES stdint.h)
 foreach(TYPE ${TYPES_CHECKED})
 	string(TOUPPER ${TYPE} TYPE_SIZE_VAR)

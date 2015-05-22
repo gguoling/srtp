@@ -40,7 +40,6 @@
 #cmakedefine HAVE_UNISTD_H 1
 #cmakedefine HAVE_BYTESWAP_H 1
 #cmakedefine HAVE_STDINT_H 1
-#cmakedefine HAVE_SYS_UIO_H 1
 #cmakedefine HAVE_INTTYPES_H 1
 #cmakedefine HAVE_SYS_TYPES_H 1
 #cmakedefine HAVE_MACHINE_TYPES_H 1
@@ -51,21 +50,11 @@
 #cmakedefine HAVE_WINDOWS_H 1
 #cmakedefine HAVE_WINSOCK2_H 1
 #cmakedefine HAVE_SYSLOG_H 1
-#cmakedefine HAVE_MEMORY_H 1
-#cmakedefine HAVE_STRINGS_H 1
-#cmakedefine HAVE_STRING_H 1
-#cmakedefine HAVE_SYS_STAT_H 1
 
-#cmakedefine HAVE_SOCKET 1
 #cmakedefine HAVE_INET_ATON 1
 #cmakedefine HAVE_USLEEP 1
 #cmakedefine HAVE_SIGACTION 1
 
-#cmakedefine HAVE_LIBSOCKET 1
-
-#cmakedefine HAVE_INT8_T 1
-#cmakedefine HAVE_INT16_T 1
-#cmakedefine HAVE_INT32_T 1
 #cmakedefine HAVE_UINT8_T 1
 #cmakedefine HAVE_UINT16_T 1
 #cmakedefine HAVE_UINT32_T 1
