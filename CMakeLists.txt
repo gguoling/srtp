@@ -257,6 +257,8 @@ else()
 		endif()
 	endif()
 endif()
+target_compile_options(srtp PRIVATE "-w")
+
 install(TARGETS srtp
 	RUNTIME DESTINATION bin
 	LIBRARY DESTINATION lib
