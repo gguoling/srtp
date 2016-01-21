@@ -239,6 +239,9 @@ set(SRTP_SOURCE_FILES
 if(WIN32)
 	list(APPEND SRTP_SOURCE_FILES srtp.def)
 endif()
+if(CMAKE_SYSTEM_NAME STREQUAL "WindowsStore")
+	set_source_files_properties(crypto/kernel/crypto_kernel.c PROPERTIES COMPILE_FLAGS "/wd4703")
+endif()
 set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/config.h PROPERTIES GENERATED ON)
 
 if(ENABLE_STATIC)
