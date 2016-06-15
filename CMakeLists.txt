@@ -158,9 +158,7 @@ add_subdirectory(include)
 add_subdirectory(crypto/include)
 
 
-if(MSVC)
-	add_definitions("/W3")
-else()
+if(NOT MSVC)
 	add_definitions("-Wall -fexpensive-optimizations -funroll-loops -fPIC")
 endif()
 
