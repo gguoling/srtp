@@ -1483,7 +1483,6 @@ srtp_err_status_t srtp_set_debug_module(char *mod_name, int v);
  */
 srtp_err_status_t srtp_list_debug_modules(void);
 
-
 /**
  * @}
  */
