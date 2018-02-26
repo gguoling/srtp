@@ -75,7 +75,7 @@ main(void) {
 #else
   printf("using built-in 64-bit math\t\t(NO_64_BIT_MATH == 1)\n");
 #endif
-
+#define ERR_REPORTING_STDOUT
 #ifdef ERR_REPORTING_STDOUT
   printf("using stdout for error reporting\t(ERR_REPORTING_STDOUT == 1)\n");
 #endif

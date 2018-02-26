@@ -379,7 +379,7 @@ octet_string_set_to_zero(uint8_t *s, int len);
 
 #ifndef SRTP_KERNEL_LINUX
 
-/* 
+/*
  * Convert big endian integers to CPU byte order.
  */
 #ifdef WORDS_BIGENDIAN

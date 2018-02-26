@@ -147,18 +147,17 @@ typedef struct {
   int   on;          /* 1 if debugging is on, 0 if it is off */
   char *name;        /* printable name for debug module      */
 } debug_module_t;
-
+#define ENABLE_DEBUGGING
 #ifdef ENABLE_DEBUGGING
-
 #define debug_on(mod)  (mod).on = 1
 
 #define debug_off(mod) (mod).on = 0
 
 /* use err_report() to report debug message */
 #define debug_print(mod, format, arg)                  \
-  if (mod.on) err_report(err_level_debug, ("%s: " format "\n"), mod.name, arg)
+ err_report(err_level_debug, ("%s: " format "\n"), mod.name, arg)
 #define debug_print2(mod, format, arg1,arg2)                  \
-  if (mod.on) err_report(err_level_debug, ("%s: " format "\n"), mod.name, arg1,arg2)
+  err_report(err_level_debug, ("%s: " format "\n"), mod.name, arg1,arg2)
 
 #else
 

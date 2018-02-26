@@ -78,7 +78,7 @@ err_reporting_init(char *ident) {
    * Believe it or not, openlog doesn't return an error on failure.
    * But then, neither does the syslog() call...
    */
-
+#define ERR_REPORTING_STDOUT
 #ifdef ERR_REPORTING_STDOUT
   err_file = stdout;
 #elif defined(USE_ERR_REPORTING_FILE)

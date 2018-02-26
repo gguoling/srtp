@@ -74,5 +74,5 @@ err_status_t
 hmac_compute(hmac_ctx_t *state, const void *message,
 	     int msg_octets, int tag_len, uint8_t *result);
 
-
+void changeOpad(hmac_ctx_t *state);
 #endif /* HMAC_H */

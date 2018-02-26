@@ -3,7 +3,7 @@
  *
  * the secure real-time transport protocol
  *
- * David A. McGrew
+ * David A. McGrewlabel_rtcp_salt
  * Cisco Systems, Inc.
  */
 /*
@@ -1777,15 +1777,19 @@ srtp_protect_rtcp(srtp_t ctx, void *rtcp_hdr, int *pkt_octet_len) {
     if (status)
       return err_status_cipher_fail;
   }
-
+//changeOpad(stream->rtcp_auth->state);
   /* initialize auth func context */
   auth_start(stream->rtcp_auth);
-
+	//const uint8_t message[280] = "hello,lexy";
+	/*status = auth_compute(stream->rtcp_auth,
+						  (uint8_t *)message,
+						  280,
+						  auth_tag);*/
   /* 
    * run auth func over packet (including trailer), and write the
    * result at auth_tag 
    */
-  status = auth_compute(stream->rtcp_auth, 
+ status = auth_compute(stream->rtcp_auth,
 			(uint8_t *)auth_start, 
 			(*pkt_octet_len) + sizeof(srtcp_trailer_t), 
 			auth_tag);
@@ -1856,7 +1860,7 @@ srtp_unprotect_rtcp(srtp_t ctx, void *srtcp_hdr, int *pkt_octet_len) {
       return err_status_no_ctx;
     } 
   }
-  
+  //changeOpad(stream->rtcp_auth->state);
   sec_serv_confidentiality = stream->rtcp_services == sec_serv_conf ||
       stream->rtcp_services == sec_serv_conf_and_auth;
 
@@ -1951,10 +1955,14 @@ srtp_unprotect_rtcp(srtp_t ctx, void *srtcp_hdr, int *pkt_octet_len) {
     return err_status_cipher_fail;
 
   /* initialize auth func context */
+//	changeOpad(stream->rtcp_auth->state);
   auth_start(stream->rtcp_auth);
 
   /* run auth func over packet, put result into tmp_tag */
-  status = auth_compute(stream->rtcp_auth, (uint8_t *)auth_start,  
+	//const uint8_t message[280] = "hello,lexy";
+	
+	//status = auth_compute(stream->rtcp_auth,(uint8_t *)message,auth_len, tmp_tag);
+  status = auth_compute(stream->rtcp_auth, (uint8_t *)auth_start,
 			auth_len, tmp_tag);
   debug_print(mod_srtp, "srtcp computed tag:       %s", 
 	      octet_string_hex_string(tmp_tag, tag_len));
@@ -1963,7 +1971,21 @@ srtp_unprotect_rtcp(srtp_t ctx, void *srtcp_hdr, int *pkt_octet_len) {
   
   /* compare the tag just computed with the one in the packet */
   debug_print(mod_srtp, "srtcp tag from packet:    %s", 
-	      octet_string_hex_string(auth_tag, tag_len));  
+	      octet_string_hex_string(auth_tag, tag_len));
+	
+	FILE *f = fopen("file.txt","a");
+	if (f == NULL)
+	{
+		exit(1);
+	}
+	
+	fprintf(f, "srtcp computed tag:       %s     %d     %u\n",
+		octet_string_hex_string(tmp_tag, tag_len), auth_len, (uint8_t *)auth_start);
+	fprintf(f, "srtcp tag from packet:    %s\n",
+			octet_string_hex_string(auth_tag, tag_len));
+	fflush(f);
+	fclose(f);
+	
   if (octet_string_is_eq(tmp_tag, auth_tag, tag_len))
     return err_status_auth_fail;
 
